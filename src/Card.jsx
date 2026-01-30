@@ -1,20 +1,22 @@
 import React from 'react'
+import './card.css'
 
 function Card(props) {
-
-  
   return (
-   <>
-<div  style={{border:'1px solid red' }}  >
-   <h1>userdetails</h1>
-   <img height={100} width={100}  src={props.image} alt="" />
-   <p>name:{props.name}</p>
-   <p>age:{props.age}</p>
-   <p>branch:{props.branch}</p>
-
-</div>
-   
-   </>
+    <div className="card">
+      <h3 className="card-title">{props.name || 'User Details'}</h3>
+      <img 
+        className="card-image"
+        src={props.image} 
+        alt={props.name || 'User avatar'}
+      />
+      <p className="card-info">
+        <strong>Age:</strong> {props.age}
+      </p>
+      <p className="card-info">
+        <strong>Branch:</strong> {props.branch}
+      </p>
+    </div>
   )
 }
 

@@ -1,26 +1,65 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import './header.css'
 
 function Header() {
-  return (
-    <>
-    <header style={{display:'flex',border:'1px solid black', justifyContent:'space-evenly'}}>
-        <div style={{display:'flex', alignItems:'center'}}>
-    <img height={50} width={50} src="https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_t.png" alt="" />
-    <div style={{fontSize:'40px'}}>
-    AZONMART
-    </div>
-        </div>
-     
-    <nav style={{display:'flex', textAlign:'center', gap:'20px',alignItems:'center'}} >
+  const navigate = useNavigate()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const token = localStorage.getItem('token')
 
-     <a href="">Home</a>
-     <a href="">About</a>
-     <a href="">Login</a>
-     <a href="">Signup</a>
-     <a href="">Support</a>
-    </nav>
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('email')
+    navigate('/login')
+    setMenuOpen(false)
+  }
+
+  return (
+    <header className="header">
+      <div className="header-content">
+        <Link to="/" className="logo-section">
+          <div className="logo-icon">🛍️</div>
+          <div className="logo-text">AZONMART</div>
+        </Link>
+        
+        <nav className={`nav-menu ${menuOpen ? 'active' : ''}`}>
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/products" className="nav-link">Products</Link>
+          <Link to="/ai-chat" className="nav-link">🤖 AI Chat</Link>
+          <Link to="/about" className="nav-link">About</Link>
+          <Link to="/support" className="nav-link">Support</Link>
+        </nav>
+
+        <div className="header-actions">
+          {token ? (
+            <div className="auth-buttons">
+              <span className="user-badge">👤 Logged In</span>
+              <button onClick={handleLogout} className="btn btn-outline">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="auth-buttons">
+              <Link to="/login" className="btn btn-outline">
+                Login
+              </Link>
+              <Link to="/signup" className="btn btn-primary">
+                Sign Up
+              </Link>
+            </div>
+          )}
+        </div>
+
+        <button 
+          className="hamburger"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </header>
-    </>
   )
 }
 
